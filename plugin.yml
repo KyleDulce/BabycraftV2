@@ -1,0 +1,52 @@
+main: me.someoneawesome.babycraft.Babycraft
+name: Babycraft
+version: pre-release-2.0
+description: Have children in minecraft
+author: Someoneawesome78
+prefix: Babycraft
+commands: 
+    babycraft:
+        description: Base Commands
+        usage: /<command>
+        aliases: [bc, baby]
+    
+    bcadmin:
+        description: Base Admin Commands
+        usage: /<command>
+
+permissions:
+    babyCraft.*:
+    children:
+      babyCraft.children:     true
+      babyCraft.solo:         true
+      babyCraft.sameGender:   true
+      babyCraft.changeGender: true
+    description: gives ALL basic babycraft permissions
+    
+  babyCraft.Admin.*:
+    children:
+      babyCraft.Admin.reload: true   
+      babyCraft.Admin.DespawnAll:  true
+      babyCraft.Admin.saveConfig: true
+    description: gives all admin permissions
+      
+  babyCraft.Admin.reload:
+    description: allows player to use /reload
+    
+  babyCraft.Admin.DespawnAll:
+    description: allows the player to despawn all children
+    
+  babyCraft.Admin.saveConfig :
+    description: saves the config of a player
+    
+  babyCraft.children:
+    description: allows player to have children
+    
+  babyCraft.solo:
+    description: allows the player to have children on his/her own, note babyCraft.children must be given
+  
+  babyCraft.sameGender:
+    description: allows player to have children with player of same gender, note both players must have the permission
+    
+  babyCraft.changeGender:
+    description: allows the player to change the Gender of their child on birth
