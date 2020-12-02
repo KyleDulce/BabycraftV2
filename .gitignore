@@ -18,11 +18,11 @@ tmp/**/*
 *~.nib
 local.properties
 .classpath
-.settings/**
+.settings/
 .loadpath
 
 #Project specific
-lib/**
+lib/
 
 # External tool builders
 .externalToolBuilders/
