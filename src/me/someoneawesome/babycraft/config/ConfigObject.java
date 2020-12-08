@@ -1,18 +1,13 @@
 package me.someoneawesome.babycraft.config;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.List;
+import java.io.*;
+import java.util.*;
 
 import org.bukkit.Color;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.configuration.file.*;
 import org.bukkit.inventory.ItemStack;
 
-import me.someoneawesome.babycraft.Babycraft;
-import me.someoneawesome.babycraft.Debug;
+import me.someoneawesome.babycraft.*;
 
 public class ConfigObject {
 	
@@ -22,10 +17,12 @@ public class ConfigObject {
 	private FileConfiguration config;
 	private File file;
 	private String filename;
+	private String def;
 	
-	public ConfigObject(Babycraft plugin, String filename) {
+	public ConfigObject(Babycraft plugin, String filename, String def) {
 		this.plugin = plugin;
 		this.filename = filename;
+		this.def = def;
 	}
 	
 	public boolean setup() {
@@ -41,6 +38,26 @@ public class ConfigObject {
 			Debug.warn(filename + " does not exist! Creating file");
 			try {
 				file.createNewFile();
+				
+				if(def != null) {
+					//Add default file
+					FileWriter fwriter = new FileWriter(file);
+					BufferedWriter writer = new BufferedWriter(fwriter);
+					Scanner reader = new Scanner(plugin.getResource(def));
+				
+					Debug.log("Writing to file");
+					
+					while(reader.hasNext()) {
+						String l = reader.nextLine();
+						//Debug.log(l);
+						writer.write(l);
+						writer.write("\n");
+					}
+					
+					writer.close();
+					reader.close();
+				}
+				
 				Debug.success(filename + " was created successfully");
 			} catch (IOException e) {
 				Debug.error(filename + "Failed to be created, stopping creation", e.getStackTrace());
@@ -128,6 +145,22 @@ public class ConfigObject {
 		//Creates new file
 		try {
 			file.createNewFile();
+			
+			if(def != null) {
+				//Add default file
+				FileWriter fwriter = new FileWriter(file);
+				BufferedWriter writer = new BufferedWriter(fwriter);
+				Scanner reader = new Scanner(plugin.getResource(def));
+			
+				while(reader.hasNext()) {
+					writer.write(reader.nextLine());
+					writer.write("\n");
+				}
+				
+				writer.close();
+				reader.close();
+			}
+			
 			Debug.success(filename + " was successfully recreated");
 		} catch (IOException e) {
 			Debug.error("Error creating new " + filename + " file. Giving up", e.getStackTrace());
@@ -146,24 +179,28 @@ public class ConfigObject {
 		config.set(path, obj);
 	}
 	
-	public int getInt(String path) {
-		return config.getInt(path);
+	public int getInt(String path, int def) {
+		return config.getInt(path, def);
 	}
 	
-	public boolean getBoolean(String path) {
-		return config.getBoolean(path);
+	public long getLong(String path, long def) {
+		return config.getLong(path, def);
 	}
 	
-	public String getString(String path) {
-		return config.getString(path);
+	public boolean getBoolean(String path, boolean def) {
+		return config.getBoolean(path, def);
 	}
 	
-	public double getDouble(String path) {
-		return config.getDouble(path);
+	public String getString(String path, String def) {
+		return config.getString(path, def);
 	}
 	
-	public Color getColor(String path) {
-		return config.getColor(path); 
+	public double getDouble(String path, double def) {
+		return config.getDouble(path, def);
+	}
+	
+	public Color getColor(String path, Color def) {
+		return config.getColor(path, def); 
 	}
 	
 	public ItemStack getItemStack(String path) {

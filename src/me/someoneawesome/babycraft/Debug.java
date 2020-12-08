@@ -21,13 +21,17 @@ public class Debug {
 		instance.warnToConsole(s);
 	}
 	
+	public static void error(String s) {
+		instance.errorToConsole(s);
+	}
+	
 	public static void error(String s, StackTraceElement[] trace) {
 		instance.errorToConsole(s, trace);
 	}
 	
-	public static void init() {
+	public static void init(Babycraft plugin) {
 		instance = new Debug();
-		instance.logger = Bukkit.getLogger();
+		instance.logger = plugin.getLogger();
 	}
 	
 	private Logger logger;
@@ -42,6 +46,10 @@ public class Debug {
 	
 	public void warnToConsole(String s) {
 		logger.log(Level.WARNING, ChatColor.YELLOW + s);
+	}
+	
+	public void errorToConsole(String s) {
+		logger.log(Level.SEVERE, ChatColor.RED + s);
 	}
 	
 	public void errorToConsole(String s, StackTraceElement[] trace) {
