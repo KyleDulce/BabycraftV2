@@ -3,6 +3,7 @@ package me.someoneawesome.babycraft;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import me.someoneawesome.babycraft.baby.creation.ClickCreation;
 import me.someoneawesome.babycraft.commands.CommandManager;
 import me.someoneawesome.babycraft.config.ConfigAgent;
 import me.someoneawesome.babycraft.marry.MarriageEventHandler;
@@ -50,6 +51,9 @@ public class Babycraft extends JavaPlugin {
 		
 		//marriage events
 		plManager.registerEvents(new MarriageEventHandler(), this);
+		
+		//Creation events
+		plManager.registerEvents(new ClickCreation.CreationListener(), this);
 		
 		Debug.log("Babycraft Enabled");
 	}
